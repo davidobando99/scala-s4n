@@ -88,6 +88,38 @@ object List {
     minMax2(lst,MaxValue,MinValue)
   }
 
+  //ClaseM3
+  def const[A](h:A,t:List[A]):List[A] = Const(h,t)
+
+  def addEnd[A](lst:List[A], elem:A):List[A] = lst match{
+    case Nil => Const(elem,Nil)
+    case Const(h,t) => Const(h,addEnd( t,elem))
+  }
+
+  def append[A](lst1:List[A], lst2:List[A]):List[A] =  (lst1,lst2) match {
+    case (Nil, Nil) => Nil
+    case (l1, Nil) => l1
+    case (Nil, l2) => l2
+    case (Const(h, t), l2) => Const(h, append(t, l2))
+
+  }
+
+  def drop[A](n:Int,lst:List[A]):List[A] =n match {
+    case 0 => lst
+    case n => drop(n-1,tail(lst))
+  }
+
+  def split[A](n:Int,lst:List[A]):(List[A],List[A]) = {
+    @tailrec
+    def split2(n:Int,lst:List[A], acum:List[A]):(List[A],List[A]) = (n,lst) match {
+      case (0,lst) => (acum,lst)
+      case (n,Nil) => (Nil,Nil)
+      case (n,Const(h,t)) => split2(n-1,t,append(acum,Const(h,Nil)))
+    }
+    split2(n,lst,Nil)
+  }
+
+
 
 
 
