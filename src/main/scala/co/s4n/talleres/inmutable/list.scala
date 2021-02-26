@@ -104,20 +104,47 @@ object List {
 
   }
 
-  def drop[A](n:Int,lst:List[A]):List[A] =n match {
-    case 0 => lst
-    case n => drop(n-1,tail(lst))
+  def drop[A](n:Int,lst:List[A]):List[A] =(n,lst) match {
+    case (0,lst) => lst
+    case (n,Nil) => Nil
+    case (n,Const(h,t)) => drop(n-1,t)
   }
 
   def split[A](n:Int,lst:List[A]):(List[A],List[A]) = {
     @tailrec
-    def split2(n:Int,lst:List[A], acum:List[A]):(List[A],List[A]) = (n,lst) match {
+    def splitAux(n:Int,lst:List[A], acum:List[A]):(List[A],List[A]) = (n,lst) match {
       case (0,lst) => (acum,lst)
-      case (n,Nil) => (Nil,Nil)
-      case (n,Const(h,t)) => split2(n-1,t,append(acum,Const(h,Nil)))
+      case (n,Nil) => (acum,Nil)
+      case (n,Const(h,t)) => splitAux(n-1,t,addEnd(acum,h))
     }
-    split2(n,lst,Nil)
+    splitAux(n,lst,Nil)
   }
+
+  /**
+   * Exercises Workshop M3
+   */
+
+  def take[A](n:Int,lst:List[A]):List[A] = {
+    @tailrec
+    def takeAux(n: Int, lst: List[A], acum: List[A]): List[A] = (n, lst) match {
+      case (0, lst) => acum
+      case (n, Nil) => acum
+      case (n, Const(h, t)) => takeAux(n - 1, t, addEnd(acum, h))
+    }
+    takeAux(n,lst,Nil)
+  }
+
+
+  def init[A](lst:List[A]):List[A] ={
+    @tailrec
+    def initAux(lst: List[A], acum: List[A]): List[A] = lst match {
+      case Const(h,Nil) => acum
+      case Const(h,t)  => initAux(t,addEnd(acum,h))
+    }
+    initAux(lst,Nil)
+
+  }
+
 
 
 
