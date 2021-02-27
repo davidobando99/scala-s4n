@@ -110,16 +110,6 @@ object List {
     case (n,Const(h,t)) => drop(n-1,t)
   }
 
-  def split[A](n:Int,lst:List[A]):(List[A],List[A]) = {
-    @tailrec
-    def splitAux(n:Int,lst:List[A], acum:List[A]):(List[A],List[A]) = (n,lst) match {
-      case (0,lst) => (acum,lst)
-      case (n,Nil) => (acum,Nil)
-      case (n,Const(h,t)) => splitAux(n-1,t,addEnd(acum,h))
-    }
-    splitAux(n,lst,Nil)
-  }
-
   /**
    * Exercises Workshop M3
    */
@@ -144,6 +134,71 @@ object List {
     initAux(lst,Nil)
 
   }
+
+  def split[A](n:Int,lst:List[A]):(List[A],List[A]) = {
+    @tailrec
+    def splitAux(n:Int,lst:List[A], acum:List[A]):(List[A],List[A]) = (n,lst) match {
+      case (0,lst) => (acum,lst)
+      case (n,Nil) => (acum,Nil)
+      case (n,Const(h,t)) => splitAux(n-1,t,addEnd(acum,h))
+    }
+    splitAux(n,lst,Nil)
+  }
+
+  def zip[A ,B](lst1:List[A],lst2:List[B]):List[(A,B)]= {
+    @tailrec
+    def zipAux(lst1:List[A],lst2:List[B], acum: List[(A,B)]):List[(A,B)] = (lst1,lst2) match {
+      case (Nil,Nil) => acum
+      case (lst1,Nil) => acum
+      case (Nil,lst2) => acum
+      case (Const(h1,t1),Const(h2,t2)) => zipAux(t1,t2, addEnd(acum,(h1,h2)))
+    }
+    zipAux(lst1,lst2,Nil)
+  }
+
+  def unzip[A ,B](lst:List[(A,B)]):(List[A],List[B]) = {
+    @tailrec
+    def unzipAux(lst:List[(A,B)],acum:(List[A],List[B])):(List[A],List[B]) = lst match {
+      case Nil=> acum
+      case Const(h,t) => unzipAux(t,(addEnd(acum._1,h._1),addEnd(acum._2,h._2)))
+    }
+    unzipAux(lst,(Nil,Nil))
+  }
+
+  //Auxiliar function for reverse
+  def lastElement[A](lst:List[A]):A= lst match{
+    case Const(h,Nil) => h
+    case Const(h,t) => lastElement(t)
+  }
+
+  def reverse[A](lst:List[A]):List[A] = {
+    @tailrec
+    def reverseAux(lst:List[A],acum:List[A]):List[A] = lst match {
+      case Nil => acum
+      case Const(h,t) => reverseAux(init(lst),addEnd(acum,if (t != Nil) lastElement(t) else h))
+    }
+    reverseAux(lst,Nil)
+  }
+
+  def intersperse[A](elem:A, lst:List[A]):List[A] = {
+    @tailrec
+    def intersperseAux(elem:A, lst:List[A],acum:List[A]):List[A] = lst match {
+      case Nil => acum
+      case Const(h,t) => intersperseAux(elem,t,if (t != Nil) addEnd(addEnd(acum,h),elem) else addEnd(acum,h))
+    }
+    intersperseAux(elem,lst,Nil)
+  }
+
+  def concat[A](lst:List[List[A]]):List[A] ={
+    @tailrec
+    def concatAux(lst:List[List[A]],acum:List[A]):List[A] = lst match {
+      case Nil => acum
+      case Const(h,t) => concatAux(t, if (t != Nil) append(acum,append(h,head(t))) else append(acum,Nil))
+    }
+    concatAux(lst,Nil)
+  }
+
+
 
 
 
