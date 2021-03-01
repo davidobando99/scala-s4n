@@ -312,7 +312,48 @@ object List {
     concatAux(lst,Nil)
   }
 
+  /**
+   * Funciones de alto orden
+   * Toda Funcion que reciba como parametro otra funcion, es una funcion de alto orden
+   */
 
+  def dropWhile[A](lst:List[A], f:A=>Boolean):List[A] = lst match{
+    case Const(h,t) if f(h) => dropWhile(t,f)
+    case _ => lst
+  }
+
+  def dropWhileCurry[A](lst:List[A])(f:A=>Boolean):List[A] = lst match{
+    case Const(h,t) if f(h) => dropWhileCurry(t)(f)
+    case _ => lst
+  }
+
+  def reduce(lst:List[Int], num:Int)(f:(Int,Int)=>Int):Int = lst match {
+    case Nil => num
+    case Const(h,t) => f(h,reduce(t,num)(f))
+  }
+
+  def sumR(lst:List[Int]) = reduce(lst,0)((x,y)=>x+y)
+  def mulR(lst:List[Int]) = reduce(lst,1)((x,y)=>x*y)
+
+  def foldRight[A,B](as:List[A], z:B)(f:(A,B)=>B):B = as match {
+    case Nil => z
+    case Const(h,t) => f(h,foldRight(t,z)(f))
+  }
+
+  def sumF(lst:List[Int]) = foldRight(lst,0)((x,y)=>x+y)
+  def mulF(lst:List[Int]) = foldRight(lst,1)((x,y)=>x*y)
+  def lengthF[A](lst:List[A]) = foldRight(lst,0)((x,y)=>1+y)
+
+  def foldLeft[A,B](as:List[A], z:B)(f:(B,A)=>B):B = as match {
+    case Nil => z
+    case Const(h,t) => foldLeft(t,f(z,h))(f)
+  }
+
+  def sumL(lst:List[Int]) = foldLeft(lst,0)(_+_)
+  def mulL(lst:List[Int]) = foldLeft(lst,0)(_*_)
+  def sumarUno(lst:List[Int]): List[Int] = foldRight(lst,Nil:List[Int])((elem,lst)=> Const(elem+1,lst))
+
+  //def map[A,B](lst:List[A])(f:A=>B):List[B] = foldRight(lst,Nil)((x,y) => Const(f(x),y))
 
 
 
