@@ -50,6 +50,30 @@ class NatSpec extends AnyFlatSpec with Matchers {
     Nat.fromIntToNat(cero) shouldEqual Cero
   }
 
+  "From the test nat1, nat2, the function addNat" should "return Suc(Cero)" in {
+    val nat1 = Cero
+    val nat2 = Suc(Cero)
+    Nat.addNat(nat1,nat2) shouldEqual Suc(Cero)
+  }
+
+  "From the test nat1, nat2, the function addNat" should "return Suc(Suc(Suc(Suc(Suc(Cero)))))" in {
+    val nat1 = Suc(Suc(Suc(Cero)))
+    val nat2 = Suc(Suc(Cero))
+    Nat.addNat(nat1,nat2) shouldEqual Suc(Suc(Suc(Suc(Suc(Cero)))))
+  }
+
+  "From the test nat1, nat2, the function prodNat" should "return Cero" in {
+    val nat1 = Cero
+    val nat2 = Suc(Cero)
+    Nat.prodNat(nat1,nat2) shouldEqual Cero
+  }
+  "From the test nat1, nat2, the function prodNat" should "return Suc(Suc(Suc(Suc(Suc(Suc(Cero))))))" in {
+    val nat1 = Suc(Suc(Suc(Cero)))
+    val nat2 = Suc(Suc(Cero))
+    Nat.prodNat(nat1,nat2) shouldEqual Suc(Suc(Suc(Suc(Suc(Suc(Cero))))))
+  }
+
+
 
 
 }

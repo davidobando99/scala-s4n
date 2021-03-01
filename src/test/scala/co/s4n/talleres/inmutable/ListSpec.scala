@@ -70,6 +70,67 @@ class ListSpec extends AnyFlatSpec with Matchers {
     List.minMax(test) shouldEqual (-9.52,-1.2)
   }
 
+  "From the list a,b,c,d,e; the function take" should "return List(a,b,c)" in {
+    val test = List("a","b","c","d","e")
+    List.take(3,test) shouldEqual List("a","b","c")
+  }
+
+  "From the list 1,2,3,4; the function take" should "return Nil" in {
+    val test = List(1,2,3,4)
+    List.take(0,test) shouldEqual Nil
+  }
+
+  "From the list 1,2,3,4,5,6 the function init" should "return List(1,2,3,4,5)" in {
+    val test = List(1,2,3,4,5,6)
+    List.init(test) shouldEqual List(1,2,3,4,5)
+  }
+
+  "From the list test the function init" should "return Nil" in {
+    val test = List(1)
+    List.init(test) shouldEqual Nil
+  }
+
+  "From the list test the function split" should "return (List(1,2,3), List(4,5,6,7))" in {
+    val test = List(1,2,3,4,5,6,7)
+    List.split(3,test) shouldEqual (List(1,2,3), List(4,5,6,7))
+  }
+
+  "From the list test the function split" should "return (Nil, List(1,2,3,4,5,6,7))" in {
+    val test = List(1,2,3,4,5,6,7)
+    List.split(0,test) shouldEqual (Nil, List(1,2,3,4,5,6,7))
+  }
+
+  "From the two lists the function zip" should "return List((1,true),(2,false),(3,true))" in {
+    val test1 = List(1,2,3)
+    val test2 = List(true,false,true,true)
+    List.zip(test1,test2) shouldEqual List((1,true),(2,false),(3,true))
+  }
+
+  "From the two lists the function zip" should "return List((1,false),(2,true),(3,false)" in {
+    val test1 = List(1,2,3,4)
+    val test2 = List(false,true,false)
+    List.zip(test1,test2) shouldEqual List((1,false),(2,true),(3,false))
+  }
+
+  "From the list test the function unzip" should "return (List(1,2,3),List(\"a\",\"b\",\"c\"))" in {
+    val test = List((1,"a"),(2,"b"),(3,"c"))
+    List.unzip(test) shouldEqual (List(1,2,3),List("a","b","c"))
+  }
+
+  "From the list test the function reverse" should "return List(\"c\", \"b\", \"a\")" in {
+    val test = List("a","b","c")
+    List.reverse(test) shouldEqual List("c", "b", "a")
+  }
+
+  "From the list test the function intersperse" should "return List(2,1,3,1,4,1,5)" in {
+    val test = List(2,3,4,5)
+    List.intersperse(1,test) shouldEqual List(2,1,3,1,4,1,5)
+  }
+
+
+
+
+
 
 
 
