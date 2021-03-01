@@ -14,10 +14,22 @@ object List {
     if (as.isEmpty) Nil
     else Const(as.head, apply(as.tail: _*))
   }
+
+  /**
+   * This function gets the List's size
+   * @param lst, List of values, any kind
+   * @return Int, List's length
+   */
   def length[A](lst:List[A]):Int = lst match {
     case Nil => 0
     case Const(h,t) => 1 + length(t)
   }
+
+  /**
+   * This function sum all the elements from an Int List
+   * @param ints, List of values, Int
+   * @return Int, sum result
+   */
   def sum(ints:List[Int]):Int = ints match {
     case Nil => 0
     case Const(h, t) => h + sum(t)
@@ -33,32 +45,51 @@ object List {
 
   }
 
-  //Exercise2
+  /**
+   * This function return the tail from a List
+   * @param lst, List of values, any kind
+   * @return List[A], List's tail
+   */
   def tail[A](lst:List[A]) = lst match {
     case Const(_, t) => t
   }
 
-  //Exercise3
+  /**
+   * This function return the first element from a List
+   * @param lst, List of values, any kind
+   * @return A, first element from the List
+   */
   def head[A](lst:List[A]) = lst match {
     case Const(h, _) => h
   }
 
-  //Exercise4
+  /**
+   * This function gets the result of the logical operation AND, from a List
+   * @param lst, List of values, Boolean
+   * @return Boolean, AND result. True if all values are true, false otherwise
+   */
   def and(lst:List[Boolean]):Boolean = lst match {
     case Nil => true
     case Const(true,t) => and(t)
     case Const(false,_) => false
   }
 
-  //Exercise5
+  /**
+   * This function gets the result of the logical operation OR, from a List
+   * @param lst, List of values, Boolean
+   * @return Boolean, OR result. False if all values are false, true otherwise
+   */
   def or(lst:List[Boolean]):Boolean = lst match {
     case Nil => false
     case Const(false,t) => or(t)
     case Const(true,_) => true
   }
 
-
-  //Exercise6
+  /**
+   * This function gets the maximum value from an Int List
+   * @param lst, List of values, Int
+   * @return Int, max value from the List
+   */
   def max(lst:List[Int]):Int = {
     @tailrec
     def max2(lst:List[Int], maxNum:Int):Int = lst match {
@@ -68,7 +99,11 @@ object List {
     max2(lst,MinValue)
   }
 
-  //Exercise7
+  /**
+   * This function gets the minimum value from a Long List
+   * @param lst, List of values, Long
+   * @return Long, min value from the List
+   */
   def min(lst:List[Long]):Long = {
     @tailrec
     def min2(lst:List[Long], minNum:Long):Long = lst match {
@@ -78,7 +113,11 @@ object List {
     min2(lst,MaxValue)
   }
 
-  //Exercise8
+  /**
+   * This function return a tuple with the minimum and maximum value from a Double List
+   * @param lst, List of values, Double
+   * @return (Double,Double), Tuple with the min and max value
+   */
   def minMax(lst:List[Double]):(Double,Double) = {
     @tailrec
     def minMax2(lst:List[Double], minNum:Double, maxNum:Double):(Double,Double) = lst match {
@@ -88,14 +127,36 @@ object List {
     minMax2(lst,MaxValue,MinValue)
   }
 
-  //ClaseM3
+  /**
+   * Class M3 Functions
+   */
+
+
+  /**
+   * This function add an element to the List's tail
+   * @param lst, List of values, any kind
+   * @param elem, Element to be added, any kind
+   * @return List[A], Updated List
+   */
   def const[A](h:A,t:List[A]):List[A] = Const(h,t)
 
+  /**
+   * This function add an element to the List's tail
+   * @param lst, List of values, any kind
+   * @param elem, Element to be added, any kind
+   * @return List[A], Updated List
+   */
   def addEnd[A](lst:List[A], elem:A):List[A] = lst match{
     case Nil => Const(elem,Nil)
     case Const(h,t) => Const(h,addEnd( t,elem))
   }
 
+  /**
+   * This function concat two Lists
+   * @param lst1, List of values, any kind
+   * @param lst2, List of values, any kind
+   * @return List[A], Concatenated List
+   */
   def append[A](lst1:List[A], lst2:List[A]):List[A] =  (lst1,lst2) match {
     case (Nil, Nil) => Nil
     case (l1, Nil) => l1
@@ -104,6 +165,12 @@ object List {
 
   }
 
+  /**
+   * This function drop the first n values of a List
+   * @param n:Int, Number of values
+   * @param lst, List of values, any kind
+   * @return List[A], List
+   */
   def drop[A](n:Int,lst:List[A]):List[A] =(n,lst) match {
     case (0,lst) => lst
     case (n,Nil) => Nil
@@ -114,6 +181,12 @@ object List {
    * Exercises Workshop M3
    */
 
+  /**
+  * This function take the first n values from the List (if they exist)
+  * @param n:Int, Number of values
+  * @param lst, List of values, any kind
+   * @return List[A], List of first n values
+  */
   def take[A](n:Int,lst:List[A]):List[A] = {
     @tailrec
     def takeAux(n: Int, lst: List[A], acum: List[A]): List[A] = (n, lst) match {
@@ -124,7 +197,11 @@ object List {
     takeAux(n,lst,Nil)
   }
 
-
+  /**
+   * This function take the first values except the last one
+   * @param lst, List of values, any kind. Cant be Nil
+   * @return List[A], List of first values except the last one
+   */
   def init[A](lst:List[A]):List[A] ={
     @tailrec
     def initAux(lst: List[A], acum: List[A]): List[A] = lst match {
@@ -135,6 +212,12 @@ object List {
 
   }
 
+  /**
+   * This function divide a list in two. The first list with n elements, the rest go to the second one
+   * @param n:Int, Number of elements to split
+   * @param lst, List of values, any kind
+   * @return (List[A],List[A]), Tuple with the two divided Lists
+   */
   def split[A](n:Int,lst:List[A]):(List[A],List[A]) = {
     @tailrec
     def splitAux(n:Int,lst:List[A], acum:List[A]):(List[A],List[A]) = (n,lst) match {
@@ -145,6 +228,12 @@ object List {
     splitAux(n,lst,Nil)
   }
 
+  /**
+   * This function fuse two different types Lists, in a Tuple-pair List
+   * @param lst1, List of values, any kind
+   * @param lst2, List of values, any kind
+   * @return List[(A,B)], List of tuples
+   */
   def zip[A ,B](lst1:List[A],lst2:List[B]):List[(A,B)]= {
     @tailrec
     def zipAux(lst1:List[A],lst2:List[B], acum: List[(A,B)]):List[(A,B)] = (lst1,lst2) match {
@@ -156,6 +245,11 @@ object List {
     zipAux(lst1,lst2,Nil)
   }
 
+  /**
+   * This function separate a List of tuples in two different Lists
+   * @param lst, List of tuples, any kind
+   * @return (List[A],List[B]), Tuple with the two Lists
+   */
   def unzip[A ,B](lst:List[(A,B)]):(List[A],List[B]) = {
     @tailrec
     def unzipAux(lst:List[(A,B)],acum:(List[A],List[B])):(List[A],List[B]) = lst match {
@@ -165,12 +259,21 @@ object List {
     unzipAux(lst,(Nil,Nil))
   }
 
-  //Auxiliar function for reverse
+  /**
+   * This function return the last element from a List
+   * @param lst, List of values, any kind
+   * @return A, Last element
+   */
   def lastElement[A](lst:List[A]):A= lst match{
     case Const(h,Nil) => h
     case Const(h,t) => lastElement(t)
   }
 
+  /**
+   * This function take a List and return an inverted List
+   * @param lst, List of values, any kind
+   * @return List[A], Inverted List
+   */
   def reverse[A](lst:List[A]):List[A] = {
     @tailrec
     def reverseAux(lst:List[A],acum:List[A]):List[A] = lst match {
@@ -180,6 +283,12 @@ object List {
     reverseAux(lst,Nil)
   }
 
+  /**
+   * This function intermix a value between the original elements from the List
+   * @param elem, Element to be intermix, any kind
+   * @param lst, List of values, any kind
+   * @return List[A], Intermixed List
+   */
   def intersperse[A](elem:A, lst:List[A]):List[A] = {
     @tailrec
     def intersperseAux(elem:A, lst:List[A],acum:List[A]):List[A] = lst match {
@@ -189,6 +298,11 @@ object List {
     intersperseAux(elem,lst,Nil)
   }
 
+  /**
+   * This function take a List of Lists and return a List with the Lists values
+   * @param lst, List of Lists, any kind
+   * @return List[A], List with the Lists values
+   */
   def concat[A](lst:List[List[A]]):List[A] ={
     @tailrec
     def concatAux(lst:List[List[A]],acum:List[A]):List[A] = lst match {
