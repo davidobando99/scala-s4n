@@ -350,11 +350,25 @@ object List {
    * Toda Funcion que reciba como parametro otra funcion, es una funcion de alto orden
    */
 
+  /**
+   * This functions drop the elements that fulfill the parameter function
+   * @param lst
+   * @param f
+   * @tparam A
+   * @return
+   */
   def dropWhile[A](lst: List[A], f: A => Boolean): List[A] = lst match {
     case Const(h, t) if f(h) => dropWhile(t, f)
     case _ => lst
   }
 
+  /**
+   * This functions drop the elements that fulfill the parameter function using currying
+   * @param lst
+   * @param f
+   * @tparam A
+   * @return
+   */
   def dropWhileCurry[A](lst: List[A])(f: A => Boolean): List[A] = lst match {
     case Const(h, t) if f(h) => dropWhileCurry(t)(f)
     case _ => lst
@@ -365,8 +379,18 @@ object List {
     case Const(h, t) => f(h, reduce(t, num)(f))
   }
 
+  /**
+   * This function sum the elements of a List using reduce method
+   * @param lst
+   * @return
+   */
   def sumR(lst: List[Int]) = reduce(lst, 0)((x, y) => x + y)
 
+  /**
+   * This function multiply the elements of a List using reduce method
+   * @param lst
+   * @return
+   */
   def mulR(lst: List[Int]) = reduce(lst, 1)((x, y) => x * y)
 
   def foldRight[A, B](as: List[A], z: B)(f: (A, B) => B): B = as match {
@@ -374,8 +398,18 @@ object List {
     case Const(h, t) => f(h, foldRight(t, z)(f))
   }
 
+  /**
+   * This function sum the elements of a List using foldRight method
+   * @param lst
+   * @return
+   */
   def sumF(lst: List[Int]) = foldRight(lst, 0)((x, y) => x + y)
 
+  /**
+   * This function multiply the elements of a List using foldRight method
+   * @param lst
+   * @return
+   */
   def mulF(lst: List[Int]) = foldRight(lst, 1)((x, y) => x * y)
 
 
@@ -384,39 +418,125 @@ object List {
     case Const(h, t) => foldLeft(t, f(z, h))(f)
   }
 
+  /**
+   * This function sum the elements of a List using foldLeft method
+   * @param lst
+   * @return
+   */
   def sumL(lst: List[Int]) = foldLeft(lst, 0)(_ + _)
 
+  /**
+   * This function multiply the elements of a List using foldLeft method
+   * @param lst
+   * @return
+   */
   def mulL(lst: List[Int]) = foldLeft(lst, 1)(_ * _)
 
+  /**
+   * This function sum one to every element from a List using foldRight method
+   * @param lst
+   * @return
+   */
   def sumarUno(lst: List[Int]): List[Int] = foldRight(lst, Nil: List[Int])((elem, lst) => Const(elem + 1, lst))
 
   /**
    * Exercises High order functions
    */
 
+  /**
+   * This function calculate the size of the List using foldRight method
+   * @param lst
+   * @tparam A
+   * @return
+   */
   def lengthF[A](lst: List[A]) = foldRight(lst, 0)((x, y) => 1 + y)
 
+  /**
+   * This function calculate the logic operation AND in a List using foldRight method
+   * @param lst
+   * @return
+   */
   def andF(lst: List[Boolean]): Boolean = foldRight(lst, true)((x, y) => x && y) //Tambien se puede poner _&&_
 
+  /**
+   * This function take the first elements that fulfill the parameter function
+   * @param lst
+   * @param p
+   * @tparam A
+   * @return
+   */
   def takeWhile[A](lst: List[A])(p: A => Boolean): List[A] = lst match {
     case Const(h, t) if p(h) => Const(h, takeWhile(t)(p))
     case _ => Nil
   }
 
+  /**
+   * This function filter the elements of a List, returning a new one, based on a parameter function using foldRight method
+   * @param lst
+   * @param p
+   * @tparam A
+   * @return
+   */
   def filter[A](lst: List[A])(p: A => Boolean): List[A] = foldRight(lst, Nil: List[A])((h, t) => if (p(h)) Const(h, t) else t)
 
+  /**
+   * This function separate a List of tuples in two different Lists using foldRight method
+   * @param lst
+   * @tparam A
+   * @tparam B
+   * @return
+   */
   def unzipF[A, B](lst: List[(A, B)]): (List[A], List[B]) = foldRight(lst, (Nil, Nil): (List[A], List[B]))((h, t) => (Const(h._1, t._1), Const(h._2, t._2)))
 
+  /**
+   * This function gets the List's size using foldLeft method
+   * @param lst
+   * @tparam A
+   * @return
+   */
   def lengthL[A](lst: List[A]): Int = foldLeft(lst, 0)((y, x) => 1 + y)
 
+  /**
+   * This function calculate the logic operation AND using foldLeft method
+   * @param lst
+   * @return
+   */
   def andL(lst: List[Boolean]): Boolean = foldLeft(lst, true)((y, x) => y && x)
 
+  /**
+   * This function take the first elements of a List that fulfill the predicate using foldRight method
+   * @param lst
+   * @param p
+   * @tparam A
+   * @return
+   */
   def takeWhileF[A](lst: List[A])(p: A => Boolean): List[A] = foldRight(lst, Nil: List[A])((h,t) => if (p(h)) Const(h, t) else Nil)
 
+  /**
+   * This function filter all the elements from a List based on the predicate using foldLeft method
+   * @param lst
+   * @param p
+   * @tparam A
+   * @return
+   */
   def filterL[A](lst: List[A])(p: A => Boolean): List[A] = foldLeft(lst, Nil: List[A])((lst, elem) => if (p(elem)) addEnd(lst,elem) else lst)
 
+  /**
+   * This function creates two List from a tuple List using foldLeft method
+   * @param lst
+   * @tparam A
+   * @tparam B
+   * @return
+   */
   def unzipL[A, B](lst: List[(A, B)]): (List[A], List[B]) = foldLeft(lst, (Nil, Nil): (List[A], List[B]))((lst, elem) => (addEnd(lst._1,elem._1), addEnd(lst._2, elem._2)))
 
+  /**
+   * This function take the first elements of a List that fulfill the predicate using foldLeft method
+   * @param lst
+   * @param p
+   * @tparam A
+   * @return
+   */
   def takeWhileL[A](lst: List[A])(p: A => Boolean): List[A] = foldLeft(lst, Nil: List[A])((lst,elem) => if (p(elem)) addEnd(lst, elem) else Nil)
 
   /**
@@ -433,15 +553,41 @@ object List {
     case Const(h, t) => Const(h.toString,lstInt2Str(t))
   }
 
-  def mapGen[A,B](lst:List[A])(f:A=>B):List[B] = lst match { //PERMITE GENERALIZAR LA FUNCION
+  /**
+   * This function map let generalize a function that seeks for change a List based on a predicate
+   * @param lst
+   * @param f
+   * @tparam A
+   * @tparam B
+   * @return
+   */
+  def mapGen[A,B](lst:List[A])(f:A=>B):List[B] = lst match {
     case Nil => Nil
     case Const(h,t) => Const(f(h),mapGen(t)(f))
   }
 
+  /**
+   * This function map let generalize a function that seeks for change a List based on a predicate using foldRight method
+   * @param lst
+   * @param f
+   * @tparam A
+   * @tparam B
+   * @return
+   */
   def map[A,B](lst:List[A])(f:A=>B):List[B] = foldRight(lst,Nil:List[B])((x,y) => Const(f(x),y))
 
+  /**
+   * This function sum one to each element of the List using map method
+   * @param lst
+   * @return
+   */
   def sumarUnoMap(lst:List[Int]):List[Int] = mapGen(lst)(_+1)
 
+  /**
+   * This functino converts each Int element from the List to String using map Method
+   * @param lst
+   * @return
+   */
   def lstInt2StrMap(lst:List[Int]):List[String] = mapGen(lst)(_.toString)
 
 }

@@ -127,6 +127,110 @@ class ListSpec extends AnyFlatSpec with Matchers {
     List.intersperse(1,test) shouldEqual List(2,1,3,1,4,1,5)
   }
 
+  //HIGH ORDER FUNCTIONS
+
+  "From the list 2,3,4,5 the function dropWhileCurry" should "return List(4,5)" in {
+    val test = List(2,3,4,5)
+    List.dropWhileCurry(test)(_<4) shouldEqual List(4,5)
+  }
+
+  "From the list 2,3,4,5 the function sumR" should "return 14" in {
+    val test = List(2,3,4,5)
+    List.sumR(test) shouldEqual 14
+  }
+
+  "From the list 2,3,4,5 the function mulR" should "return 120" in {
+    val test = List(2,3,4,5)
+    List.mulR(test) shouldEqual 120
+  }
+
+  "From the list 2,3,4,5 the function sumF" should "return 14" in {
+    val test = List(2,3,4,5)
+    List.sumF(test) shouldEqual 14
+  }
+
+  "From the list 2,3,4,5 the function mulF" should "return 120" in {
+    val test = List(2,3,4,5)
+    List.mulF(test) shouldEqual 120
+  }
+
+  "From the list 2,3,4,5 the function sumL" should "return 14" in {
+    val test = List(2,3,4,5)
+    List.sumL(test) shouldEqual 14
+  }
+
+  "From the list 2,3,4,5 the function mulL" should "return 120" in {
+    val test = List(2,3,4,5)
+    List.mulL(test) shouldEqual 120
+  }
+
+  "From the list 2,3,4,5 the function sumarUno" should "return List(3,4,5,6)" in {
+    val test = List(2,3,4,5)
+    List.sumarUno(test) shouldEqual List(3,4,5,6)
+  }
+
+  "From the list 2,3,4,5 the function lengthF" should "return 5" in {
+    val test = List(2,3,4,5)
+    List.lengthF(test) shouldEqual 4
+  }
+
+  "From the list true,true,false the function andF" should "return false" in {
+    val test = List(true,true,false)
+    List.andF(test) shouldEqual false
+  }
+
+  "From the list true,true,true the function andF" should "return true" in {
+    val test = List(true,true,true)
+    List.andF(test) shouldEqual true
+  }
+
+  "From the list 2,3,4,5 the function filter" should "return List(2,4)" in {
+    val test = List(2,3,4,5)
+    List.filter(test)(_%2==0) shouldEqual List(2,4)
+  }
+
+  "From the list (1,false),(2,true),(3,false) the function unzipF" should "return List(1,2,3),List(false,true,false)" in {
+    val test = List((1,false),(2,true),(3,false))
+    List.unzipF(test) shouldEqual (List(1,2,3),List(false,true,false))
+  }
+
+  "From the list 2,3,4,5 the function lengthL" should "return 5" in {
+    val test = List(2,3,4,5)
+    List.lengthL(test) shouldEqual 4
+  }
+
+  "From the list true,true,true the function andL" should "return true" in {
+    val test = List(true,true,true)
+    List.andL(test) shouldEqual true
+  }
+
+  "From the list 2,3,4,5 the function takeWhileF" should "return List(2,3)" in {
+    val test = List(2,3,4,5)
+    List.takeWhileF(test)(_<4) shouldEqual List(2,3)
+  }
+
+  "From the list 2,3,4,5 the function filterL" should "return List(2,4)" in {
+    val test = List(2,3,4,5)
+    List.filterL(test)(_%2==0) shouldEqual List(2,4)
+  }
+
+  "From the list (1,false),(2,true),(3,false) the function unzipL" should "return List(1,2,3),List(false,true,false)" in {
+    val test = List((1,false),(2,true),(3,false))
+    List.unzipL(test) shouldEqual (List(1,2,3),List(false,true,false))
+  }
+
+  "From the list 2,3,4,5 the function sumarUnoMap" should "return List(3,4,5,6)" in {
+    val test = List(2,3,4,5)
+    List.sumarUnoMap(test) shouldEqual List(3,4,5,6)
+  }
+
+  "From the list 2,3,4,5 the function lstInt2StrMap" should "return List(\"2\",\"3\",\"4\",\"5\")" in {
+    val test = List(2,3,4,5)
+    List.lstInt2StrMap(test) shouldEqual List("2","3","4","5")
+  }
+
+
+
 
 
 
