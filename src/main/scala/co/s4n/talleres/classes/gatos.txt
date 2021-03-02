@@ -1,0 +1,3 @@
+val io = new Gato("IO", "Fawn", "Churrus")
+val make = new Gato("Make", "Red", "Leche")
+val docker = new Gato("Docker", "Blue", "Cuido")
