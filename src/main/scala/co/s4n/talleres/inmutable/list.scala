@@ -390,9 +390,6 @@ object List {
 
   def sumarUno(lst: List[Int]): List[Int] = foldRight(lst, Nil: List[Int])((elem, lst) => Const(elem + 1, lst))
 
-  //def map[A,B](lst:List[A])(f:A=>B):List[B] = foldRight(lst,Nil)((x,y) => Const(f(x),y))
-
-
   /**
    * Exercises High order functions
    */
@@ -422,5 +419,29 @@ object List {
 
   def takeWhileL[A](lst: List[A])(p: A => Boolean): List[A] = foldLeft(lst, Nil: List[A])((lst,elem) => if (p(elem)) addEnd(lst, elem) else Nil)
 
+  /**
+   * Class M4 Terminando funciones de alto orden
+   */
+
+  /**
+   * This function transforms a List of type Int to a List of Strings
+   * @param lst
+   * @return
+   */
+  def lstInt2Str(lst:List[Int]):List[String] = lst match {
+    case Nil => Nil
+    case Const(h, t) => Const(h.toString,lstInt2Str(t))
+  }
+
+  def mapGen[A,B](lst:List[A])(f:A=>B):List[B] = lst match { //PERMITE GENERALIZAR LA FUNCION
+    case Nil => Nil
+    case Const(h,t) => Const(f(h),mapGen(t)(f))
+  }
+
+  def map[A,B](lst:List[A])(f:A=>B):List[B] = foldRight(lst,Nil:List[B])((x,y) => Const(f(x),y))
+
+  def sumarUnoMap(lst:List[Int]):List[Int] = mapGen(lst)(_+1)
+
+  def lstInt2StrMap(lst:List[Int]):List[String] = mapGen(lst)(_.toString)
 
 }
