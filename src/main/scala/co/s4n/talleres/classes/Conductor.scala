@@ -1,5 +1,6 @@
 package co.s4n.talleres.classes
 
-class Conductor(val nombre:String, val apellido:String, val totalCarreras:Int, val carrerasTerminadas:Int, val carrerasNoTerminadas:Int) {
+class Conductor(val nombre:String, val apellido:String, val totalCarreras:Int, val carrerasTerminadas:Int) {
 
+  def getCarrerasNoTerminadas = totalCarreras -carrerasTerminadas
 }
