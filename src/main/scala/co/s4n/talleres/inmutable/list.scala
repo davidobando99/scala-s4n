@@ -537,7 +537,13 @@ object List {
    * @tparam A
    * @return
    */
-  def takeWhileL[A](lst: List[A])(p: A => Boolean): List[A] = foldLeft(lst, Nil: List[A])((lst,elem) => if (p(elem)) addEnd(lst, elem) else Nil)
+  def takeWhileL[A](lst: List[A])(p: A => Boolean): List[A] = {
+    def f(b:(Boolean,List[A]),a:A):(Boolean,List[A]) = b match {
+      case (true, lst) => if (p(a)) (true,addEnd(lst,a)) else (false,lst)
+      case (false,lst) => b
+    }
+    foldLeft(lst, (true,Nil: List[A]))(f)._2
+  }
 
   /**
    * Class M4 Terminando funciones de alto orden
