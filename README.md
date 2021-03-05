@@ -14,7 +14,7 @@
 ### Unit Test
 * [List Test](https://github.com/davidobando99/scala-s4n/blob/master/src/test/scala/co/s4n/talleres/inmutable/ListSpec.scala)
 * [Nat Test](https://github.com/davidobando99/scala-s4n/blob/master/src/test/scala/co/s4n/talleres/inmutable/NatSpec.scala)
-* [Collection List Scala Test](https://github.com/davidobando99/scala-s4n/blob/master/src/main/scala/co/s4n/talleres/lists/Lista.scala)
+* [Collection List Scala Test](https://github.com/davidobando99/scala-s4n/blob/master/src/test/scala/co/s4n/talleres/lists/ListaSpec.scala)
 
 ### Author
 David Obando 
