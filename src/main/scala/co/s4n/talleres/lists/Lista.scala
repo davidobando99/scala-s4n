@@ -46,13 +46,91 @@ object Lista {
     predAtPosAux(lst,preds,List(Nil)).tail
   }
 
+  /**
+   * This functions gets the last element of the List
+   * @param lst
+   * @tparam A
+   * @return
+   */
+  def myLast[A](lst:List[A]):A = lst match {
+    case head :: Nil => head
+    case head :: tail => myLast(tail)
+  }
+
+  def myButLast[A](lst:List[A]):A = lst match {
+    case head :: _ :: Nil => head
+    case _ :: tail => myButLast(tail)
+  }
+
+  def my2Last[A](lst:List[A]):List[A] = lst match {
+    case head :: n :: Nil => List(head,n)
+    case _ :: tail => my2Last(tail)
+  }
+
+  def elementAt[A](lst:List[A], pos:Int):A = (lst,pos) match {
+    case (head::_,1) => head
+    case (_::tail,n) => elementAt(tail,n-1)
+  }
+
+  def myLength[A](lst:List[A]):Int = lst match {
+    case _::Nil => 1
+    case _::tail => 1+ myLength(tail)
+  }
+  def myLengthFoldR[A](lst:List[A]):Int = lst.foldRight(0)((_,tail)=>1+tail)
+
+  def myLengthFoldL[A](lst:List[A]):Int = lst.foldLeft(0)((y,_)=>y+1)
+
+
+  def myReverse[A](lst: List[A]): List[A] = {
+    @tailrec
+    def myReverseAux[A](lst: List[A], acum: List[A]): List[A] = lst match {
+      case Nil => acum
+      case head :: tail => myReverseAux(tail, head :: acum)
+    }
+    myReverseAux(lst, Nil)
+  }
+
+  def isPalindrome[A](lst: List[A]): Boolean= lst == myReverse(lst)
+
+
+  def compress[A](lst: List[A]): List[A] = lst match {
+    case head::Nil => List(head)
+    case head::h2::tail if (head==h2) => compress(h2::tail)
+    case head::tail => head::compress(tail)
+  }
+
+  //def encode[A](lst: List[A]): List[(Int,A)] = {
+  //  def encode[A](lst: List[A], n:Int ,acu:List[(Int, A)]): List[(Int, A)] = lst match {
+  //    case head :: Nil => acu
+ //     case head :: h2 :: tail if (head == h2) => encode (h2 :: tail,1 +n,acu)
+     // case head :: tail => (n,head) :: encode(tail,0,acu::n,head)
+
+  //  }
+  //  encode(lst,0,List[(1,_)])
+  //}
+
+  def duplicate[A](lst:List[A]):List[A] ={
+    def duplicateAux[A](lst:List[A], accu:List[A]):List[A] = lst match{
+      case head::Nil => accu:+head:+head
+      case head::tail => duplicateAux(tail,if(accu==Nil) head::head::accu else accu :+ head:+head)
+    }
+    duplicateAux(lst,Nil)
+  }
+
+
+
+
+
   def main(args:Array[String]) ={
-      val x = predAtPos(List("A","B","C"))(List((2,_.equals("A")),(0,_.equals("A")), (6,_.equals("B"))))
-      println(x)
       val y = predAtPos(List(1,2,3,4,5,6))(List((4,_==5),(0,_%2 == 1), (5,_%2 == 1)))
       println(y)
       val z = predAtPos(List(1,2,3,4,5,6))(List((1,_<=2),(6,_%2 == 0),(0,_>0)))
       println(z)
+     val d = duplicate(List(1,1,2,2,3,3,3))
+    println(d)
+
+
+
   }
 
 

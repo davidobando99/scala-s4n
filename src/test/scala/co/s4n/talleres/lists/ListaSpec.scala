@@ -29,4 +29,49 @@ class ListaSpec extends AnyFlatSpec with Matchers {
     val test = List(1,2,3,4,5,6)
     Lista.predAtPos(test)(List((1,_<=2),(6,_%2 == 0),(0,_>0))) shouldEqual List(List(true),List(),List(true))
   }
+
+  "From the list 1,2,3,4,5,6, the function myLast" should "return 6" in {
+    val test = List(1,2,3,4,5,6)
+    Lista.myLast(test) shouldEqual 6
+  }
+
+  "From the list 1,2,3,4,5,6, the function myButLast" should "return 5" in {
+    val test = List(1,2,3,4,5,6)
+    Lista.myButLast(test) shouldEqual 5
+  }
+
+  "From the list 1,2,3,4,5,6, the function myButLast" should "return List(5,6)" in {
+    val test = List(1,2,3,4,5,6)
+    Lista.my2Last(test) shouldEqual List(5,6)
+  }
+
+  "From the list h,b,c,d the function elementAt" should "return c" in {
+    val test = List("h","b","c","d")
+    Lista.elementAt(test,3) shouldEqual "c"
+  }
+
+  "From the list 1,2,3,4 the function myLength" should "return 6" in {
+    val test = List(1,2,3,4)
+    Lista.myLength(test) shouldEqual 4
+  }
+
+  "From the list 1,2,3,4 the function myLengthFoldR" should "return 4" in {
+    val test = List(1,2,3,4)
+    Lista.myLengthFoldR(test) shouldEqual 4
+  }
+
+  "From the list 1,2,3,4 the function myLengthFoldL" should "return 4" in {
+    val test = List(1,2,3,4)
+    Lista.myLengthFoldR(test) shouldEqual 4
+  }
+
+  "From the list 1,2,3,4 the function myReverse" should "return List(4,3,2,1)" in {
+    val test = List(1,2,3,4)
+    Lista.myReverse(test) shouldEqual List(4,3,2,1)
+  }
+
+  "From the list 1,2,3 the function compress" should "return List(1,2,3)" in {
+    val test = List(1,1,2,3,3,4)
+    Lista.compress(test) shouldEqual List(1,2,3,4)
+  }
 }
