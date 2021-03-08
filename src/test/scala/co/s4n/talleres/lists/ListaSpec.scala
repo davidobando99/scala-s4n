@@ -74,4 +74,29 @@ class ListaSpec extends AnyFlatSpec with Matchers {
     val test = List(1,1,2,3,3,4)
     Lista.compress(test) shouldEqual List(1,2,3,4)
   }
+
+  "From the list 1,2,3,4,5 the function lastFor" should "return 5" in {
+    val test = List(1,2,3,4,5)
+    Lista.lastFor(test) shouldEqual 5
+  }
+
+  "From the list 1,2,3,4,5 the function myButLastFor" should "return 4" in {
+    val test = List(1,2,3,4,5)
+    Lista.myButLastFor(test).getOrElse(0) shouldEqual 4
+  }
+
+  "From the list 1,2,3,4,5 the function elementFor" should "return 3" in {
+    val test = List(1,2,3,4,5)
+    Lista.elementFor(test,3).getOrElse(0) shouldEqual 3
+  }
+
+  "From the list 1,2,3,4,5 the function lengthFor" should "return 5" in {
+    val test = List(1,2,3,4,5)
+    Lista.lengthFor(test) shouldEqual 5
+  }
+
+  "From the list 1,2,3,4,5 the function reverseFor" should "return List(5,4,3,2,1)" in {
+    val test = List(1,2,3,4,5)
+    Lista.reverseFor(test) shouldEqual List(5,4,3,2,1)
+  }
 }

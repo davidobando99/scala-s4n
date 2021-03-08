@@ -117,6 +117,65 @@ object Lista {
     duplicateAux(lst,Nil)
   }
 
+  def replicate[A](lst:List[A], n:Int):List[A] = ???
+
+  def myLastFor[A](lst:List[A]):Option[A] ={
+    def myLastForAux[A](lst:List[A]):List[A] = for {
+      x <- lst
+      if(x == lst(lst.length-1))
+    } yield (x)
+    myLastForAux(lst) match {
+      case Nil => None
+      case head::_ => Some(head)
+    }
+  }
+
+  def myButLastFor[A](lst:List[A]):Option[A] ={
+    def myButLastForAux[A](lst:List[A]):List[A] = for {
+      x <- lst
+      if(x == lst(lst.length-2))
+    } yield (x)
+    myButLastForAux(lst) match {
+      case Nil => None
+      case head::_ => Some(head)
+    }
+  }
+
+  def elementAtFor[A](lst:List[A], n:Int):Option[A] ={
+    def elementAtForAux[A](lst:List[A], n:Int):List[A] = for {
+      x <- lst
+      if(x == lst(n-1))
+    } yield (x)
+    elementAtForAux(lst,n) match {
+      case Nil => None
+      case head::_ => Some(head)
+    }
+  }
+
+  def reverseForC[A](lst:List[A]):List[A] ={
+    val a = for {
+      x <- lst.length-1 to 0 by -1
+    } yield lst(x)
+    a.toList
+
+  }
+
+  def lengthFor[A](lst:List[A]):Int =(for {
+    x <- lst } yield ((a:Int) => a + 1)).foldLeft(0)((e,f) => f(e))
+
+  def lastFor[A](lst:List[A]):A =(for {
+    x <- lst } yield ((a:A)=> x)).foldLeft(lst.head)((e,f) => f(e))
+
+  def elementFor[A](lst:List[A],n:Int):Option[A] =(for {
+    x <- lst } yield ((a:Int,b:Option[A])=> b match {
+    case None => if (a==n) (a,Some(x)) else (a+1,None)
+    case Some(l) => (a,Some(l))
+  })).foldLeft((1,None:Option[A]))((e,f)=>f(e._1,e._2))._2
+
+  def reverseFor[A](lst:List[A]) = (for {
+    x <- lst
+  } yield ((xs:List[A]) => xs :+ x)).foldRight(Nil:List[A])((f,e) => f(e))
+
 
 
 
@@ -126,8 +185,10 @@ object Lista {
       println(y)
       val z = predAtPos(List(1,2,3,4,5,6))(List((1,_<=2),(6,_%2 == 0),(0,_>0)))
       println(z)
-     val d = duplicate(List(1,1,2,2,3,3,3))
-    println(d)
+      val d = duplicate(List(1,1,2,2,3,3,3))
+      println(d)
+
+
 
 
 
